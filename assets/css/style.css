@@ -1,0 +1,196 @@
+/* ==========================================================================
+   1. VARIABLES Y CONFIGURACIÓN INICIAL (Mobile-First)
+   ========================================================================== */
+:root {
+    --color-principal: #2563eb;
+    --color-hover: #1d4ed8;
+    --color-texto: #0f172a;
+    --color-fondo: #f9fafb;
+    --color-tarjeta: #ffffff;
+    --color-borde: #e2e8f0;
+
+    /* Unidades flexibles con clamp() */
+    --espacio: clamp(1rem, 2vw, 2rem);
+    --texto-base: clamp(0.95rem, 0.3vw + 0.85rem, 1.1rem);
+    --texto-titulo: clamp(1.5rem, 1.5vw + 1.2rem, 2.5rem);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: var(--texto-base);
+    color: var(--color-texto);
+    background-color: var(--color-fondo);
+    line-height: 1.6;
+
+    /* MACROESTRUCTURA CON CSS GRID */
+    display: grid;
+    grid-template-areas:
+        "encabezado"
+        "navegacion"
+        "principal"
+        "pie";
+    gap: var(--espacio);
+}
+
+/* ==========================================================================
+   2. ESTRUCTURA Y NAVEGACIÓN (Flexbox para micro-layouts)
+   ========================================================================== */
+.encabezado-sitio {
+    grid-area: encabezado;
+    text-align: center;
+    padding: var(--espacio);
+    background-color: var(--color-principal);
+    color: #ffffff;
+}
+
+.encabezado-sitio h1 {
+    font-size: var(--texto-titulo);
+}
+
+/* Navegación con Flexbox */
+.navegacion-sitio {
+    grid-area: navegacion;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    background-color: var(--color-tarjeta);
+    position: sticky;
+    top: 0;
+    padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    z-index: 100;
+}
+
+.navegacion-sitio a {
+    color: var(--color-principal);
+    text-decoration: none;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+/* Indicador visual de foco para navegacion por teclado */
+.navegacion-sitio a:focus,
+.navegacion-sitio a:hover,
+.enlace-tramite:focus,
+.enlace-tramite:hover {
+    outline: 2px solid var(--color-hover);
+    background-color: rgba(37, 99, 235, 0.1);
+}
+
+.contenido-principal {
+    grid-area: principal;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--espacio);
+}
+
+.seccion-portal {
+    margin-bottom: calc(var(--espacio) * 2);
+}
+
+/* TARJETAS CON FLEXBOX */
+.grid-servicios {
+    display: flex;
+    flex-direction: column;
+    gap: var(--espacio);
+    margin-top: 1rem;
+}
+
+.tarjeta-servicio {
+    background-color: var(--color-tarjeta);
+    border: 1px solid var(--color-borde);
+    border-radius: 8px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.imagen-tarjeta {
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
+}
+
+.enlace-tramite, .boton-contacto {
+    display: inline-block;
+    margin-top: auto;
+    color: var(--color-principal);
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.boton-contacto {
+    background-color: var(--color-principal);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    text-decoration: none;
+}
+
+.pie-sitio {
+    grid-area: pie;
+    text-align: center;
+    padding: var(--espacio);
+    background-color: var(--color-tarjeta);
+    border-top: 1px solid var(--color-borde);
+}
+
+/* ==========================================================================
+   3. DESIGN RESPONSIVO (Media Queries)
+   ========================================================================== */
+
+/* Tablet (>= 768px): Pasar de columna a grid de 2 columnas */
+@media (min-width: 768px) {
+    .grid-servicios {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+}
+
+/* Escritorio (>= 1024px): Grid de 3 columnas */
+@media (min-width: 1024px) {
+    .grid-servicios {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+    }
+}
+
+/* ==========================================================================
+   4. ACCESIBILIDAD Y MODO OSCURO
+   ========================================================================== */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --color-texto: #f1f5f9;
+        --color-fondo: #0f172a;
+        --color-tarjeta: #1e293b;
+        --color-borde: #334155;
+        --color-principal: #60a5fa;
+    }
+
+    .encabezado-sitio {
+        background-color: #1e293b;
+    }
+
+    .navegacion-sitio {
+        background-color: #1e293b;
+    }
+
+    .boton-contacto {
+        background-color: #3b82f6;
+        color: #ffffff;
+    }
+}
